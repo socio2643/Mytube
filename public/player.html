@@ -1,0 +1,7 @@
+<video id="videoPlayer" controls autoplay></video>
+
+<script>
+const params = new URLSearchParams(location.search);
+const file = params.get("file");
+document.getElementById("videoPlayer").src = `/stream/${file}`;
+</script>
