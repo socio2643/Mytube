@@ -1,10 +1,31 @@
-const params = new URLSearchParams(location.search);
-const file = params.get("file");
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Player</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back">← 뒤로</a>
+    <h1>Player</h1>
+  </header>
 
-if (!file) {
-  alert("파일이 지정되지 않았습니다.");
-} else {
-  const video = document.getElementById("videoPlayer");
-  // 여기서는 인코딩 하지 말고 그대로 넘기기
-  video.src = "/stream/" + file;
-}
+  <main class="player-container">
+    <video id="videoPlayer" controls autoplay></video>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file");
+
+    if (!file) {
+      alert("파일이 지정되지 않았습니다.");
+    } else {
+      const video = document.getElementById("videoPlayer");
+      // 여기서는 인코딩 하지 말고 그대로 넘기기
+      video.src = "/stream/" + file;
+    }
+  </script>
+</body>
+</html>
