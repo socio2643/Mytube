@@ -1,7 +1,10 @@
-<video id="videoPlayer" controls autoplay></video>
-
-<script>
 const params = new URLSearchParams(location.search);
 const file = params.get("file");
-document.getElementById("videoPlayer").src = `/stream/${file}`;
-</script>
+
+if (!file) {
+  alert("파일이 지정되지 않았습니다.");
+} else {
+  const video = document.getElementById("videoPlayer");
+  // 여기서는 인코딩 하지 말고 그대로 넘기기
+  video.src = "/stream/" + file;
+}
