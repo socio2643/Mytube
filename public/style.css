@@ -1,67 +1,119 @@
 :root {
-  --primary-color: #121212;
-  --secondary-color: #222;
-  --font-color: #fff;
+  /* 색상 팔레트 개선 */
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-main: #f5f5f5;
+  --text-sub: #b0b0b0;
+  --accent-color: #3b82f6; /* 포인트 컬러 (파란색 계열) */
+  
+  /* 레이아웃 변수 */
+  --card-radius: 12px;
+  --gap-size: 24px;
+  --transition-speed: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 body {
-  font-family: sans-serif;
-  background-color: var(--primary-color);
-  color: var(--font-color);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
   margin: 0;
   padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased; /* 폰트 부드럽게 */
 }
 
 h1 {
   text-align: center;
+  margin: 40px 0;
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: -0.5px;
+  background: linear-gradient(45deg, #fff, var(--text-sub));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* 타이틀에 그라데이션 효과 */
 }
 
+/* Flex 대신 Grid 사용: 반응형 처리가 훨씬 깔끔함 */
 #list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-  padding: 16px;
+  display: grid;
+  /* 카드의 최소 너비를 280px로 잡고 화면 꽉 차게 자동 배치 */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap-size);
+  padding: 20px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .card {
-  width: 300px;
-  background-color: var(--secondary-color);
-  border-radius: 5px;
+  background-color: var(--card-bg);
+  border-radius: var(--card-radius);
   overflow: hidden;
-  box-shadow: 0 0 5px rgba(0,0,0,0.5);
-  transition: transform 0.2s;
-  cursor: pointer;
-}
-
-.card:hover {
-    transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.05); /* 미세한 테두리로 구분감 */
 }
 
 .card a {
   text-decoration: none;
-  color: var(--font-color);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 호버 효과 강화 */
+.card:hover {
+  transform: translateY(-8px); /* 위로 살짝 떠오르는 효과 */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  border-color: var(--accent-color); /* 호버 시 테두리 강조 */
 }
 
 .card .thumb {
   width: 100%;
+  aspect-ratio: 16 / 9; /* 이미지 비율 고정 */
+  object-fit: cover;
+  background-color: #333; /* 로딩 전 배경색 */
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .card p {
-  padding: 10px;
+  padding: 16px;
   margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-main);
 }
 
+/* 카드 내 설명 텍스트가 길어질 경우 말줄임표 처리 (...) */
+.card p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 비디오 플레이어 섹션 */
 .player-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  align-items: center;
+  margin: 40px auto;
+  width: 90%;
+  max-width: 1000px;
 }
 
 #videoPlayer {
-  width: 90%;
-  max-width: 800px; /* Adjust as needed */
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  aspect-ratio: 16 / 9; /* 비디오 비율 유지 */
+  border-radius: var(--card-radius);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  background-color: #000;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  #list { padding: 16px; gap: 16px; }
+  .card:hover { transform: none; } /* 모바일에서는 터치 오작동 방지를 위해 호버 끔 */
 }
